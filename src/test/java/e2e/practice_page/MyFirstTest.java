@@ -1,15 +1,12 @@
 package e2e.practice_page;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import e2e.BaseTest;
-import io.qameta.allure.Step;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
@@ -17,35 +14,27 @@ import steps.MainPageSteps;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Selenide.switchTo;
 import static pages.PagesFactory.app;
 
 @Slf4j
 public class MyFirstTest extends BaseTest {
-    private final String URL ="https://rahulshettyacademy.com/AutomationPractice/";
-    private final String URLRahulShetty ="https://rahulshettyacademy.com/client/";
+    private final String URL = "https://rahulshettyacademy.com/AutomationPractice/";
+    private final String URLRahulShetty = "https://rahulshettyacademy.com/client/";
     private final String URLRahulShettyAutomation = "https://rahulshettyacademy.com/client/";
+    private final String URLRahulShettyLoginPage = "https://rahulshettyacademy.com/client/auth/login";
     private final String URLofPasswordNew = "https://rahulshettyacademy.com/client/auth/password-new";
 
 
     @Test
-    public void mainHeaderOnTheMainPageTest(){
+    public void mainHeaderOnTheMainPageTest() {
         Selenide.open(URL);
-        var currentURL =  WebDriverRunner.url();
+        var currentURL = WebDriverRunner.url();
         Assertions.assertThat(currentURL).as("Checking of current URL of Practice page").isEqualTo(URL);
         MainPageSteps.selectFirstAndSecondCheckBoxes();
     }
 
     @Test
-    public void login(){
-        Selenide.open(URLRahulShetty);
-        var currentURLRahulShetty = WebDriverRunner.url();
-        Assertions.assertThat(currentURLRahulShetty).as("Checking of current Rahul Shetty practice page URL").isEqualTo(URLRahulShettyAutomation);
-        System.out.println("This is it " + currentURLRahulShetty);
-    }
-
-    @Test
-    public void getCheckBoxElementsAutomationPageViaLogin(){
+    public void getCheckBoxElementsAutomationPageViaLogin() {
         Selenide.open(URLRahulShettyAutomation);
         app().getLoginPage()
                 .fillEmailField("misticcat2018@gmail.com")
@@ -60,8 +49,9 @@ public class MyFirstTest extends BaseTest {
         }
 
     }
+
     @Test
-    public void getAlertTextWhenAddToCartOnAutomationPage(){
+    public void getAlertTextWhenAddToCartOnAutomationPage() {
         System.out.println("Opening URL: " + URLRahulShettyAutomation);
         Selenide.open(URLRahulShettyAutomation);
 
@@ -98,6 +88,23 @@ public class MyFirstTest extends BaseTest {
         } catch (Exception e) {
             System.out.println("Alert not found: " + e.getMessage());
         }
+
+
     }
+
+    @Test
+    public void searchProductViaSearchField() {
+        login();
+        var automationPage = app().getAutomationPage();
+        automationPage.fillSearchFieldAndPressEnter("IPHONE 13 PRO");
+
+        var listOfVisibleProductsAutomationPage = automationPage.getVisibleProductsFromCollection();
+        for (int i = 0; i < listOfVisibleProductsAutomationPage.size(); i++) {
+            System.out.println(listOfVisibleProductsAutomationPage.get(i).text());
+        }
+    }
+
 }
+
+
 

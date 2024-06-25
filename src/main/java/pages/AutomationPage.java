@@ -1,12 +1,8 @@
 package pages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Step;
-import pages.LoginPage;
-import pages.MainPage;
-import pages.RegisterPage;
+import org.openqa.selenium.Keys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +29,15 @@ public class AutomationPage {
     private final SelenideElement womenSearchForCheckBox = $x("//div[@class='py-2 ml-3']//label[text()='women']/preceding-sibling::input");
     private final SelenideElement viewButtonOfFirstProduct = $x("//*[@id='products']//div[2]/div[1]/div/div/button[1]");//виправи локатор
     private final SelenideElement addToCardButtonOfFirstProduct = $x("//div[contains(@class,'ng-star-inserted')][1]//button[@class='btn w-10 rounded']");//без прив'язки до тексту та номеру блоку - ніяк
+    private final ElementsCollection allProductsOnThePageCollection = $$x("//div[@class='col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-3 ng-star-inserted']");
     private final SelenideElement homeButton = $x("//i[@class='fa fa-home']/ancestor::button");//виправила
     private final SelenideElement ordersButton = $x("//i[@class='fa fa-handshake-o']/ancestor::button");//виправила
     private final SelenideElement cartButton = $x("//i[@class='fa fa-shopping-cart']/ancestor::button");//виправила
     private final SelenideElement signOutButton = $x("//i[@class='fa fa-sign-out']/ancestor::button");//виправила
 
-    public AutomationPage fillSearchField(String searchProduct){
+    public AutomationPage fillSearchFieldAndPressEnter(String searchProduct){
         searchFilterField.shouldBe(visible).sendKeys(searchProduct);
+        searchFilterField.sendKeys(Keys.ENTER);
         return this;
     }
 
@@ -135,6 +133,19 @@ public class AutomationPage {
             }
         }
         return visibleElements;
+    }
+
+    public List<SelenideElement> getVisibleProductsFromCollection(){
+        var visibleProducts = new ArrayList<SelenideElement>();
+        int listSize = allProductsOnThePageCollection.size();
+        for (int i = 0; i < listSize; i++) {
+            var currentElement = allProductsOnThePageCollection.get(i);
+            if (currentElement.isDisplayed()){
+                visibleProducts.add(currentElement);
+            }
+        }
+        return visibleProducts;
+
     }
 
     public AutomationPage checkThatUserIsLogedIn() {

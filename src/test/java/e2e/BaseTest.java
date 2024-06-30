@@ -1,5 +1,6 @@
 package e2e;
 
+import actions.Navigation;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import org.assertj.core.api.Assertions;
@@ -12,6 +13,8 @@ public class BaseTest {
 
     private final String URLRahulShettyAutomation = "https://rahulshettyacademy.com/client/";
     private final String URLRahulShettyLoginPage = "https://rahulshettyacademy.com/client/auth/login";
+
+    protected final Navigation navigation = new Navigation();
 
     public void login(){
         Selenide.open(URLRahulShettyAutomation);

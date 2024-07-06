@@ -29,13 +29,14 @@ public class AutomationPage {
     private final SelenideElement menSearchForCheckBox = $x("//div[@class='py-2 ml-3']//label[text()='men']/preceding-sibling::input");
     private final SelenideElement womenSearchForCheckBox = $x("//div[@class='py-2 ml-3']//label[text()='women']/preceding-sibling::input");
     private final SelenideElement viewButtonOfFirstProduct = $x("//*[@id='products']//div[2]/div[1]/div/div/button[1]");//виправи локатор
-    private final SelenideElement addToCardButtonOfFirstProductButton = $x("//div[contains(@class,'ng-star-inserted')][1]//button[@class='btn w-10 rounded']");//без прив'язки до тексту та номеру блоку - ніяк
+    private final SelenideElement addToCardButtonOfFirstProductButton = $x("//h5/*[contains(text(), 'ZARA COAT 3')]/../../button[@class='btn w-10 rounded']");//без прив'язки до тексту та номеру блоку - ніяк
     private final ElementsCollection allProductsOnThePageCollection = $$x("//div[@class='col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-3 ng-star-inserted']");
     private final SelenideElement homeButton = $x("//i[@class='fa fa-home']/ancestor::button");//виправила
     private final SelenideElement ordersButton = $x("//i[@class='fa fa-handshake-o']/ancestor::button");//виправила
     private final SelenideElement cartButton = $x("//i[@class='fa fa-shopping-cart']/ancestor::button");//виправила
     private final SelenideElement signOutButton = $x("//i[@class='fa fa-sign-out']/ancestor::button");//виправила
     private final SelenideElement addToCardToast = $x("//div[@aria-label='Product Added To Cart']");//
+    private final SelenideElement noProductsFoundToast = $x("//div[@aria-label='No Products Found']");//
     private final SelenideElement cartCounterIcon = $x("//button[@routerlink='/dashboard/cart']//label");//
 
     public AutomationPage fillSearchFieldAndPressEnter(String searchProduct){
@@ -46,7 +47,8 @@ public class AutomationPage {
 
     public AutomationPage fillMinMaxPriceRange(String min, String max){
         minPriceField.shouldBe(visible).sendKeys(min);
-        minPriceField.shouldBe(visible).sendKeys(max);
+        maxPriceField.shouldBe(visible).sendKeys(max);
+        searchFilterField.click();
         return this;
     }
 
@@ -104,7 +106,6 @@ public class AutomationPage {
         return new ProductDetailsPage();
     }
 
-    //Як перевірити, що після додавання товару в кошие з'явився зелений саксес попап і Cart в правому верхньому кутку відображає 1 товар?
 
     public String addToCardOfFirstProduct(){
         var x = addToCardButtonOfFirstProductButton.$x("./preceding-sibling::h5")
@@ -161,8 +162,13 @@ public class AutomationPage {
     }
 
     public AutomationPage checkAddToCardToast(){
-        addToCardToast.shouldBe(visible).shouldHave(text(" Product Added To Cart "));
-       return this;
+        System.out.println(addToCardToast.shouldBe(visible).shouldHave(text(" Product Added To Cart ")).getText());
+        return this;
+    }
+
+    public AutomationPage checkNoProductsFoundToast(){
+        System.out.println(noProductsFoundToast.shouldBe(visible).shouldHave(text(" No Products Found ")).getText());
+        return this;
     }
 
     public AutomationPage checkCartCounter(int count){

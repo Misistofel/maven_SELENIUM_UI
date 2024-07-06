@@ -1,7 +1,9 @@
 package pages;
 
 import com.codeborne.selenide.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,8 @@ public class CardPage {
     }
 
     public CardPage isDisplayedContinueShoppingButton(){
-        continueShoppingButton.shouldBe(visible);
+        new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(10))
+                .until(driver -> continueShoppingButton.isDisplayed());
         return new CardPage();
     }
 

@@ -16,16 +16,6 @@ public class BaseTest {
 
     protected final Navigation navigation = new Navigation();
 
-    public void login(){
-        Selenide.open(URLRahulShettyAutomation);
-        var currentURLRahulShetty = WebDriverRunner.url();
-        Assertions.assertThat(currentURLRahulShetty).as("Checking of current Rahul Shetty practice page URL").isEqualTo(URLRahulShettyLoginPage);
-        System.out.println("This is it " + currentURLRahulShetty);
-        app().getLoginPage()
-                .fillEmailField("misticcat2018@gmail.com")
-                .fillPasswordField("EduvGruziju804")
-                .pushLoginButton()
-                .checkThatUserIsLogedIn();
-    }
+
 
 }

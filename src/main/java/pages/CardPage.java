@@ -58,5 +58,9 @@ public class CardPage {
 
     }
 
+    public void checkProductCartIsNotEmpty(){
+       productsList.shouldHave(CollectionCondition.sizeGreaterThan(0));
+    }
+
 
 }

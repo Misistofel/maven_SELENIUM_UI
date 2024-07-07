@@ -1,13 +1,11 @@
 package e2e;
 
 import actions.Navigation;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
-import org.assertj.core.api.Assertions;
-import org.openqa.selenium.support.PageFactory;
-import pages.PagesFactory;
-
-import static pages.PagesFactory.app;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 public class BaseTest {
 
@@ -16,6 +14,15 @@ public class BaseTest {
 
     protected final Navigation navigation = new Navigation();
 
+    @BeforeMethod
+    public void openApp() {
+        Configuration.browser = "chrome";
+        Configuration.timeout = 10000;
+        Selenide.open();
+    }
 
-
+    @AfterMethod
+    public void closeBrowser() {
+        Selenide.closeWebDriver();
+    }
 }

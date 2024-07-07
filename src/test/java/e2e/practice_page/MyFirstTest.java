@@ -1,14 +1,16 @@
 package e2e.practice_page;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import e2e.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 import steps.MainPageSteps;
 
-import java.time.Duration;
 
 import static pages.PagesFactory.app;
 
@@ -40,9 +42,27 @@ public class MyFirstTest extends BaseTest {
 
     }
 
-    @Test
+
+    @Test(invocationCount = 3)
     //чому вертає Size of the list 0 а не 1???
-    public void getAlertTextWhenAddToCartOnAutomationPage() throws InterruptedException {
+    public void getAlertTextWhenAddToCartOnAutomationPage()  {
+//Приклад як додати опції для хрому!
+//        Configuration.browser = "chrome";
+//        Configuration.browserCapabilities = new ChromeOptions()
+//                .addArguments("--remote-allow-origins=*")
+//                .setExperimentalOption("prefs", ClipboardHelpers.getExperimentalPrefs());
+
+ //       ChromeOptions options = new ChromeOptions();
+//        options.addArguments("start-maximized");
+//        options.addArguments("--disable-notifications");
+    //    Configuration.browserSize = "1920x1080";
+
+//        DesiredCapabilities caps = DesiredCapabilities.chrome();
+//        caps.setCapability(ChromeOptions.CAPABILITY, options);
+
+       // Configuration.browser = "chrome";
+       // Configuration.browserCapabilities = options;
+
         System.out.println("Opening URL: " + navigation.getURLRahulShettyAutomation());//URLRahulShettyAutomation);
         Selenide.open(navigation.getURLRahulShettyAutomation());
 
@@ -56,18 +76,14 @@ public class MyFirstTest extends BaseTest {
         String title = app().getAutomationPage()
                 .addToCardOfFirstProduct();
 
-        var listOfCartProducts = app().getAutomationPage()
+       app().getAutomationPage()
                 .checkAddToCardToast()
                 .checkCartCounter(1)
                 .clickCartButton()
-                .isDisplayedContinueShoppingButton()
-                .getCartProductsCollection();
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+                .checkProductCartIsNotEmpty();
+        var listOfCartProducts = app().getCardPage().getCartProductsCollection();
+//        new WebDriverWait(WebDriverRunner.getWebDriver(), Duration.ofSeconds(10))
+//                .until(driver -> continueShoppingButton.isDisplayed());
 
         System.out.println("Size of the list " + listOfCartProducts.size());
         for (int i = 0; i < listOfCartProducts.size(); i++) {
@@ -86,18 +102,20 @@ public class MyFirstTest extends BaseTest {
                 .fillPasswordField("EduvGruziju804")
                 .pushLoginButton()
                 .checkThatUserIsLogedIn();
-        var automationPage = app().getAutomationPage();
-        automationPage.fillSearchFieldAndPressEnter("IPHONE 13 PRO");
+        app().getAutomationPage()
+                .fillSearchFieldAndPressEnter("IPHONE 13 PRO")
+                .checkMarketProductsListIsNotEmpty();
 
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
-        var listOfVisibleProductsAutomationPage = automationPage.getVisibleProductsFromCollection();
-        for (int i = 0; i < listOfVisibleProductsAutomationPage.size(); i++) {
-            System.out.println(listOfVisibleProductsAutomationPage.get(i).text());
+        var listOfVisibleProducts = app().getAutomationPage()
+                .getVisibleProductsFromCollection();//Треба діставати лише тайтл продукта
+        for (int i = 0; i < listOfVisibleProducts.size(); i++) {
+            System.out.println(listOfVisibleProducts.get(i).text());
         }
     }
 

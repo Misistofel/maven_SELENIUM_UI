@@ -12,7 +12,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <selenide.version>7.3.2</selenide.version>
+        <selenide.version>7.3.3</selenide.version>
         <testng.version>7.10.2</testng.version>
         <allure-testng.version>2.27.0</allure-testng.version>
         <assertj.version>3.25.3</assertj.version>

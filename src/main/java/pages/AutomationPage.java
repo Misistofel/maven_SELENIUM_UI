@@ -1,7 +1,9 @@
 package pages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import helpers.Waiter;
 import org.openqa.selenium.Keys;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class AutomationPage {
     public AutomationPage fillSearchFieldAndPressEnter(String searchProduct){
         searchFilterField.shouldBe(visible).sendKeys(searchProduct);
         searchFilterField.sendKeys(Keys.ENTER);
+        Waiter.sleep(1);
         return this;
     }
 
@@ -142,16 +145,14 @@ public class AutomationPage {
         return visibleElements;
     }
 
-    public List<SelenideElement> getVisibleProductsFromCollection(){
-        var visibleProducts = new ArrayList<SelenideElement>();
-        int listSize = allProductsOnThePageCollection.size();
-        for (int i = 0; i < listSize; i++) {
-            var currentElement = allProductsOnThePageCollection.get(i);
-            if (currentElement.isDisplayed()){
-                visibleProducts.add(currentElement);
-            }
-        }
-        return visibleProducts;
+    public ElementsCollection getVisibleProductsFromCollection(){
+//        var visibleProducts = new ArrayList<SelenideElement>();
+//        int listSize = allProductsOnThePageCollection.size();
+//        for (int i = 0; i < listSize; i++) {
+//            var currentElement = allProductsOnThePageCollection.get(i);
+//            visibleProducts.add(currentElement);
+    //    }
+        return allProductsOnThePageCollection;
 
     }
 
@@ -176,5 +177,10 @@ public class AutomationPage {
         boolean displayed = cartCounterIcon.isDisplayed();
         System.out.println("This is countCart locator " + displayed);
         return this;
+    }
+
+    public void checkMarketProductsListIsNotEmpty() {
+        allProductsOnThePageCollection.shouldHave(CollectionCondition.sizeGreaterThan(0));
+        System.out.println("Size of elements in Market: " + allProductsOnThePageCollection.size());
     }
 }

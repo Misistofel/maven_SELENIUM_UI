@@ -33,6 +33,7 @@ public class AutomationPage {
     private final SelenideElement viewButtonOfFirstProduct = $x("//*[@id='products']//div[2]/div[1]/div/div/button[1]");//виправи локатор
     private final SelenideElement addToCardButtonOfFirstProductButton = $x("//h5/*[contains(text(), 'ZARA COAT 3')]/../../button[@class='btn w-10 rounded']");//без прив'язки до тексту та номеру блоку - ніяк
     private final ElementsCollection allProductsOnThePageCollection = $$x("//div[@class='col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1 mb-3 ng-star-inserted']");
+    private final ElementsCollection titleOfProductPageCollection = $$x("//h5");
     private final SelenideElement homeButton = $x("//i[@class='fa fa-home']/ancestor::button");//виправила
     private final SelenideElement ordersButton = $x("//i[@class='fa fa-handshake-o']/ancestor::button");//виправила
     private final SelenideElement cartButton = $x("//i[@class='fa fa-shopping-cart']/ancestor::button");//виправила
@@ -152,7 +153,7 @@ public class AutomationPage {
 //            var currentElement = allProductsOnThePageCollection.get(i);
 //            visibleProducts.add(currentElement);
     //    }
-        return allProductsOnThePageCollection;
+        return titleOfProductPageCollection;
 
     }
 

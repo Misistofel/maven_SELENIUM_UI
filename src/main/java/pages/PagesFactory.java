@@ -7,6 +7,7 @@ public final class PagesFactory {
     private static PagesFactory instance;
     private final AutomationPage automationPage;
     private final CardPage cardPage;
+    private final PaymentPage paymentPage;
     private final EnterNewPwdPage enterNewPwdPage;
     private final LoginPage loginPage;
     private final MainPage mainPage;
@@ -32,6 +33,7 @@ public final class PagesFactory {
         orderPage = new OrderPage();
         productDetailsPage =new ProductDetailsPage();
         registerPage = new RegisterPage();
+        paymentPage = new PaymentPage();
     }
 
 

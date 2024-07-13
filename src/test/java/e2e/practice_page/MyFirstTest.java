@@ -105,13 +105,6 @@ public class MyFirstTest extends BaseTest {
         app().getAutomationPage()
                 .fillSearchFieldAndPressEnter("IPHONE 13 PRO")
                 .checkMarketProductsListIsNotEmpty();
-
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         var listOfVisibleProducts = app().getAutomationPage()
                 .getVisibleProductsFromCollection();//Треба діставати лише тайтл продукта
         for (int i = 0; i < listOfVisibleProducts.size(); i++) {
@@ -211,6 +204,41 @@ public class MyFirstTest extends BaseTest {
         for (int i = 0; i < listOfVisibleProductsAutomationPage.size(); i++) {
             System.out.println(listOfVisibleProductsAutomationPage.get(i).text());
         }
+
+    }
+
+    @Test
+    public void fillAllFieldsAndSubmitOnPaymentPage() {
+        System.out.println("Opening URL: " + navigation.getURLRahulShettyAutomation());//URLRahulShettyAutomation);
+        Selenide.open(navigation.getURLRahulShettyAutomation());
+
+        System.out.println("Filling login details");
+        app().getLoginPage()
+                .fillEmailField("misticcat2018@gmail.com")
+                .fillPasswordField("EduvGruziju804")
+                .pushLoginButton()
+                .checkThatUserIsLogedIn();
+
+        String title = app().getAutomationPage()
+                .addToCardOfFirstProduct();
+
+        app().getAutomationPage()
+                .clickCartButton()
+                .pressCheckoutButton();
+
+        app().getPaymentPage()
+                .visibilityOfPaymentMethodHeader();
+        app().getPaymentPage()
+                .fillCrerditCardField("4333 3333 3333 3333")
+                .chooseMonthFromDropdown("03")
+                .chooseDayFromDropdown("27")
+                .FillNameOnCard("Tofel");
+        app().getPaymentPage()
+                .FillApplyCouponField("111")
+                .clickApplyCouponButton()
+                .FillSelectCountryField("Austral")
+                .clickPlaceOrder();
+
 
     }
 }

@@ -15,7 +15,7 @@ public class CardPage {
     private final SelenideElement byNowButton = $x("//div[@class='cartSection removeWrap']/button[@class='btn btn-primary']");//це найкращий варіант
     private final SelenideElement deleteButton = $x("//button[@class='btn btn-danger']");//виправила
     private final SelenideElement continueShoppingButton = $x("//button[@routerlink='/dashboard']");//виправила
-    private final SelenideElement checkoutButton = $x("//i[@class='fa fa-sign-out']/ancestor::button");//виправила
+    private final SelenideElement checkoutButton = $x("//button[text()='Checkout']");//виправила
     private final ElementsCollection productsList = $$x("//div[@class='cart']//div[@class='cartSection']");
 
     public OrderPage pressByNowButton (){
